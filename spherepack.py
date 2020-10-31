@@ -56,6 +56,7 @@ c_candidate = c_prime + (r * np.array([-1, 1/np.sqrt(3), 2*np.sqrt(2/3)]))
 if trimesh.proximity.signed_distance(mesh, [c_candidate])[0] > 0:
     centers = np.vstack(( centers, [c_candidate] ))
 
+
 c_candidate = c_prime + (r * 2 / np.sqrt(3) * np.array([0, -1, -np.sqrt(2)]))
 if trimesh.proximity.signed_distance(mesh, [c_candidate])[0] > 0:
     centers = np.vstack(( centers, [c_candidate] ))
@@ -67,4 +68,67 @@ if trimesh.proximity.signed_distance(mesh, [c_candidate])[0] > 0:
 c_candidate = c_prime + (r * np.array([-1, 1/np.sqrt(3), -2*np.sqrt(2/3)]))
 if trimesh.proximity.signed_distance(mesh, [c_candidate])[0] > 0:
     centers = np.vstack(( centers, [c_candidate] ))
+
+
+def arraydist(point):
+    for c in centers:
+        if np.linalg.norm(point - c) < r - eps:
+                return False
+    return True
+
+
+# c_prime = centers[1]
+def new_env(c_prime):
+    tempc = centers
+    c_candidate = c_prime + np.array([2 * r, 0, 0])
+    if trimesh.proximity.signed_distance(mesh, [c_candidate])[0] > 0 and arraydist(c_candidate):
+        tempc = np.vstack((tempc, [c_candidate]))
+        
+    c_candidate = c_prime + (r * np.array([np.sqrt(3), 1, 0]))
+    if trimesh.proximity.signed_distance(mesh, [c_candidate])[0] > 0 and arraydist(c_candidate):
+        tempc = np.vstack(( tempc, [c_candidate] ))
+    	
+    c_candidate = c_prime + (r * np.array([-np.sqrt(3), 1, 0]))
+    if trimesh.proximity.signed_distance(mesh, [c_candidate])[0] > 0 and arraydist(c_candidate):
+        tempc = np.vstack(( tempc, [c_candidate] ))
+    
+    c_candidate = c_prime + (r * np.array([-2, 0, 0]))
+    if trimesh.proximity.signed_distance(mesh, [c_candidate])[0] > 0 and arraydist(c_candidate):
+        tempc = np.vstack(( tempc, [c_candidate] ))
+    	
+    c_candidate = c_prime + (r * np.array([-np.sqrt(3), -1, 0]))
+    if trimesh.proximity.signed_distance(mesh, [c_candidate])[0] > 0 and arraydist(c_candidate):
+        tempc = np.vstack(( tempc, [c_candidate] ))
+    	
+    c_candidate = c_prime + (r * np.array([np.sqrt(3), -1, 0]))
+    if trimesh.proximity.signed_distance(mesh, [c_candidate])[0] > 0 and arraydist(c_candidate):
+        tempc = np.vstack(( tempc, [c_candidate] ))
+    
+    
+    c_candidate = c_prime + (r * 2 / np.sqrt(3) * np.array([0, -1, np.sqrt(2)]))
+    if trimesh.proximity.signed_distance(mesh, [c_candidate])[0] > 0 and arraydist(c_candidate):
+        tempc = np.vstack(( tempc, [c_candidate] ))
+    
+    c_candidate = c_prime + (r * np.array([1, 1/np.sqrt(3), 2*np.sqrt(2/3)]))
+    if trimesh.proximity.signed_distance(mesh, [c_candidate])[0] > 0 and arraydist(c_candidate):
+        tempc = np.vstack(( tempc, [c_candidate] ))
+    
+    c_candidate = c_prime + (r * np.array([-1, 1/np.sqrt(3), 2*np.sqrt(2/3)]))
+    if trimesh.proximity.signed_distance(mesh, [c_candidate])[0] > 0 and arraydist(c_candidate):
+        tempc = np.vstack(( tempc, [c_candidate] ))
+    
+    
+    c_candidate = c_prime + (r * 2 / np.sqrt(3) * np.array([0, -1, -np.sqrt(2)]))
+    if trimesh.proximity.signed_distance(mesh, [c_candidate])[0] > 0 and arraydist(c_candidate):
+        tempc = np.vstack(( tempc, [c_candidate] ))
+    
+    c_candidate = c_prime + (r * np.array([1, 1/np.sqrt(3), -2*np.sqrt(2/3)]))
+    if trimesh.proximity.signed_distance(mesh, [c_candidate])[0] > 0 and arraydist(c_candidate):
+        tempc = np.vstack(( tempc, [c_candidate] ))
+    
+    c_candidate = c_prime + (r * np.array([-1, 1/np.sqrt(3), -2*np.sqrt(2/3)]))
+    if trimesh.proximity.signed_distance(mesh, [c_candidate])[0] > 0 and arraydist(c_candidate):
+        tempc = np.vstack(( tempc, [c_candidate] ))
+    return tempc
+centers = new_env(centers[1])
 print(centers)
