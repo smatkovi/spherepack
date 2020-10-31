@@ -68,7 +68,7 @@ if trimesh.proximity.signed_distance(mesh, [c_candidate])[0] > 0:
 def arraydist(point):
     for c in centers:
         if np.linalg.norm(point - c) < r - eps:
-                return False
+            return False
     return True
 
 
@@ -134,3 +134,6 @@ while surface_old < surface:
     surface_old = surface
     surface = len(centers)
 print(centers)
+f = open(str(sys.argv[1])+".out", "a")
+f.writelines(["%s\n" % item  for item in centers])
+f.close()
