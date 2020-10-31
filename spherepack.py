@@ -1,7 +1,7 @@
 import numpy as np
 import trimesh
 
-r = 3.0
+r = 300.0
 eps = r * 0.01
 centers = np.array([])
 mesh = trimesh.load_mesh('btr.stl')
@@ -130,5 +130,12 @@ def new_env(c_prime):
     if trimesh.proximity.signed_distance(mesh, [c_candidate])[0] > 0 and arraydist(c_candidate):
         tempc = np.vstack(( tempc, [c_candidate] ))
     return tempc
-centers = new_env(centers[1])
+
+surface = len(centers)
+surface_old = 1
+while surface_old < surface:
+    for i in range(surface_old, surface):
+        centers = new_env(centers[i])
+    surface_old = surface
+    surface = len(centers)
 print(centers)
