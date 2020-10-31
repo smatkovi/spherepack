@@ -3,10 +3,12 @@ import numpy as np
 import trimesh
 
 r = float(sys.argv[2])
-print("radius=",r," file=",sys.argv[1])
+print("radius =",r,"; file =",sys.argv[1])
 eps = r * 0.01
 centers = np.array([])
 mesh = trimesh.load_mesh(sys.argv[1])
+if mesh.is_watertight:
+        print("approximately "+str(int(mesh.volume/(r*r*r*22/7)))+" spheres")
 
 
 # find nearest point on mesh and go a distance of a radius in negative direction of the normal to this nearest triangle on which this point is
@@ -66,8 +68,8 @@ if trimesh.proximity.signed_distance(mesh, [c_candidate])[0] > 0:
 
 
 def arraydist(point):
-    for c in centers:
-        if np.linalg.norm(point - c) < r - eps:
+    for c in reversed(centers):
+        if np.sum((point - c)**2) < r*r:
             return False
     return True
 
@@ -131,6 +133,7 @@ surface_old = 1
 while surface_old < surface:
     for i in range(surface_old, surface):
         centers = new_env(centers[i])
+    print(len(centers)+" spheres found yet")
     surface_old = surface
     surface = len(centers)
 print(centers)
