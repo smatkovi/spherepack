@@ -1,17 +1,12 @@
+import sys
 import numpy as np
 import trimesh
 
-r = 300.0
+r = float(sys.argv[2])
+print("radius=",r," file=",sys.argv[1])
 eps = r * 0.01
 centers = np.array([])
-mesh = trimesh.load_mesh('btr.stl')
-
-print(trimesh.proximity.closest_point(mesh, [[0.0, 0.0, 0.0]]))
-print(trimesh.proximity.closest_point(mesh, [[0.0, 0.0, 0.0]]))
-print(trimesh.proximity.signed_distance(mesh, [[0.0, 0.0, 0.0]])[0] < 0)
-print(mesh.face_normals[
-	trimesh.proximity.closest_point(mesh, [[0.0, 0.0, 0.0]])[2][0]])
-
+mesh = trimesh.load_mesh(sys.argv[1])
 
 
 # find nearest point on mesh and go a distance of a radius in negative direction of the normal to this nearest triangle on which this point is
