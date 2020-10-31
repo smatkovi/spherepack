@@ -133,7 +133,7 @@ surface_old = 1
 while surface_old < surface:
     for i in range(surface_old, surface):
         centers = new_env(centers[i])
-    print(len(centers)+" spheres found yet")
+    print(str(len(centers))+" spheres found yet")
     surface_old = surface
     surface = len(centers)
 print(centers)
